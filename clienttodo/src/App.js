@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import Todo from './components/todo';
 
 function App() {
 
@@ -8,10 +9,7 @@ function App() {
   }
   return (
    <div className='App'>
-     <h1 style ={{color:"Red"}}> React Todo Application</h1>
-     <input type='text' name ='todo' placeholder ='enter the text'/>
-     
-     <button onClick = {addTodo}>Add Todo</button>
+     <Todo></Todo>
    </div>
   );
 }
