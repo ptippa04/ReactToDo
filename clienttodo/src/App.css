@@ -54,6 +54,29 @@ button {
   font-size: medium;
 }
 
+button:focus {
+  outline: none;
+}
+
 body{
   background-color:bisque;
+}
+
+span{
+  font-style:italic;
+  color:red;
+}
+ul{
+  list-style: none;
+  text-align:center;
+}
+li{
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-bottom: 25;
+}
+
+h1{
+padding-bottom: 25px;
+
 }
