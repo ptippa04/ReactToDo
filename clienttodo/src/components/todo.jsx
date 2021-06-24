@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class Todo extends Component {
     state = { 
@@ -6,9 +7,28 @@ class Todo extends Component {
         text:'',
         error:''
      }
+
+
+     componentDidMount(){
+         console.log("component mounted")
+         this.getTodos();
+     }
+
+     getTodos = () =>{
+
+        axios.get(`https://jsonplaceholder.typicode.com/todos`)
+        .then(res =>{
+
+           console.log(res.data);
+            const todoItems = res.data;
+            this.setState({todoItems});
+        }).catch( err =>{
+            console.log("could not get data");
+        });
+     }
     render() { 
         return ( <div>
-            <h1 style ={{color:"grey"}}> React Todo Application</h1>
+            <h1 style ={{color:"Grey"}}> React Todo Application</h1>
             <input type='text' name ='todo' onChange ={this.handleChange} value={this.state.text} placeholder ='enter the text'/>
             
      
@@ -16,15 +36,16 @@ class Todo extends Component {
            <p> <span>{this.state.error}</span></p>
             <ul>
                 {this.state.todoItems.map(todo =>{ return(
-                    <li key={todo.id}>{todo}</li>
+                    <li key={todo.id}>{todo.title}</li>
                 )})}
             </ul>
         </div> );
     }
 
     addTodo = () =>{
-        const newTodo = [
-        this.state.text
+        const newTodo = [{
+       "title": this.state.text
+        }
         ]
         if(!this.state.text){
             this.setState({error: 'input required'});
@@ -38,6 +59,8 @@ class Todo extends Component {
             text:'',
             error:''
         }));
+
+       
     }
     }
 
