@@ -22,13 +22,16 @@ class Todo extends Component {
            console.log(res.data);
             const todoItems = res.data;
             this.setState({todoItems});
+            this.setState({error:'',text:''})
         }).catch( err =>{
             console.log("could not get data");
         });
      }
     render() { 
         return ( <div>
-            <h1 style ={{color:"Grey"}}> React Todo Application</h1>
+         
+            <h1 style ={{color:"darkGrey"}}> My Todo App</h1>
+                        
             <input type='text' name ='todo' onChange ={this.handleChange} value={this.state.text} placeholder ='enter the text'/>
             
      
@@ -39,6 +42,7 @@ class Todo extends Component {
                     <li key={todo._id}>{todo.title}</li>
                 )})}
             </ul>
+            
         </div> );
     }
 
@@ -56,7 +60,10 @@ class Todo extends Component {
     
 
      const task = {title : this.state.text}
-     if(task.title && (task.title.length >0)){
+     if((!isNaN(task.title)) && (task.title.length >0)){
+        this.setState({error: 'input cannot be a number'});
+     }
+     else if(task.title && (task.title.length >0)){
          console.log("adding todos")
          axios.post(`http://localhost:4000/todos`,task)
          .then(res =>{

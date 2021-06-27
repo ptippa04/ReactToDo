@@ -49,7 +49,7 @@ input {
 }
 
 button {
-  background:green;
+  background:rgb(77, 230, 77);
   border-radius: 5px;
   font-size: medium;
 }
@@ -59,7 +59,7 @@ button:focus {
 }
 
 body{
-  background-color:bisque;
+  background-color:black;
 }
 
 span{
@@ -74,9 +74,17 @@ li{
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;
     padding-bottom: 25;
+    color:orange;
 }
 
 h1{
 padding-bottom: 25px;
+
+}
+
+.todo{
+
+  text-align:center;
+  
 
 }
