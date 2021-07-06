@@ -9,7 +9,7 @@ router.get('/',(req,res,next) => {
     //     _id : "1233"
     // }]
     // res.send("responding");
-     Todo.find({},'title')
+     Todo.find({})
       .then(data => res.json(data))
       .catch(next)
 
@@ -28,6 +28,28 @@ router.post('/',(req,res,next) => {
     }
 
 });
+
+router.delete('/:id',(req,res,next) =>{
+    Todo.findOneAndDelete({'_id':req.params.id})
+    .then(data => res.json(data))
+    .catch(next);
+})
+
+
+router.post('/:id',(req,res,next) =>{
+    Todo.findById({'_id':req.params.id})
+    .then(todo =>{
+        todo.title = req.body.title;
+        
+
+        todo.save().then(todo =>{
+            res.json(todo)
+        })
+        .catch(err =>{
+            res.status(400).send("update not possibel");
+        })
+    })
+})
 
 
 module.exports = router;

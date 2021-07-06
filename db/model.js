@@ -4,6 +4,9 @@ const Schema = mongoose.Schema;
 const todo = new Schema({
     title:{
         type:String
+    },
+    completed:{
+        type: Boolean
     }
     
 })

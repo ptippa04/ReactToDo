@@ -49,9 +49,12 @@ input {
 }
 
 button {
-  background:rgb(77, 230, 77);
+  background:rgb(86, 140, 211);
   border-radius: 5px;
   font-size: medium;
+  padding-left: 1px;
+  padding-right: 2px;
+  padding-bottom: 20p;
 }
 
 button:focus {
@@ -59,21 +62,28 @@ button:focus {
 }
 
 body{
-  background-color:black;
+  background-color:rgba(0, 0, 0, 0.849);
+  line-height: 1.4;
+  height: 100vh;
 }
 
 span{
   font-style:italic;
   color:red;
+
+  padding-left :150px;
 }
 ul{
+  display: inline;
   list-style: none;
-  text-align:center;
 }
+
 li{
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;
-    padding-bottom: 25;
+    padding-bottom: 45;
+    padding-right:25px;
+     
     color:orange;
 }
 
@@ -85,6 +95,38 @@ padding-bottom: 25px;
 .todo{
 
   text-align:center;
-  
+
 
 }
+
+.todo-container div{
+
+  display:inline-block;
+}
+
+.todo-container{
+  display: flex;
+  justify-content: space-evenly;
+
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.inner{
+  width: 100%;
+  padding: 8rem 10px 4rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
