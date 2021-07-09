@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import TodoItem from './TodoItem';
 
+import NavBar from './NavBar';
+
 class Todo extends Component {
     state = { 
         todoItems:[],
@@ -115,14 +117,27 @@ class Todo extends Component {
      
     render() { 
        
-        return ( <div className="container">
+        return ( 
+            <>
+               
                 <div className="inner">
+                   
          
-            <h1 style ={{color:"darkGrey"}}> My Todo App</h1>
+            <h1 style ={{color:"darkGrey"}}> My Todos</h1>
             
                         
-            <input type='text' name ='todo' onChange ={this.handleChange} value={this.state.text} placeholder ='add todo here'/>
-            
+         {/*  <input type='text' name ='todo' onChange ={this.handleChange} value={this.state.text} placeholder ='add todo here'/>*/}
+         
+            <select id="dropdown" onChange={this.handleDropdownChange}>
+              <option value="N/A">select todo</option>
+              <option value="Buy milk and eggs">Buy milk and eggs</option>
+              <option value="Finish pending tasks">Finish pending tasks</option>
+              <option value="update resume">update resume</option>
+              <option value="finish tutorial">finish tutorial</option>
+              <option value="Do Laundry">Do Laundry</option>
+              <option value="Get Mails">Get Mails</option>
+            </select>
+          
      
             <button style ={{background:"lightCyan"}} onClick={this.addTodo}>Add Todo</button>
            <p> <span>{this.state.error}</span></p>
@@ -137,8 +152,9 @@ class Todo extends Component {
                 )})}
                 </ul>
                 </div>
+                </>
             
-        </div> );
+         );
     }
 
 
@@ -171,7 +187,7 @@ class Todo extends Component {
     }
 
   
-    handleChange = (e) =>{
+    handleDropdownChange = (e) =>{
 
 
         this.setState({text:e.target.value})

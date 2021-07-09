@@ -5,6 +5,9 @@
     border-bottom: 1px solid #eaeaea;
   }
   
-  .checkbox {
+  .checkbox input {
     margin-right: 1px;
+    align-items:center;
+    text-align: left;
+    padding-right:25px;
   }
