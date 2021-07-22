@@ -4,13 +4,17 @@ import axios from 'axios';
 import TodoItem from './TodoItem';
 
 import NavBar from './NavBar';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 class Todo extends Component {
     state = { 
         todoItems:[],
         text:'',
         error:'',
-        completed:false
+        completed:false,
+        todoDate : new Date()
        
      }
 
@@ -120,14 +124,14 @@ class Todo extends Component {
         return ( 
             <>
                
-                <div className="inner">
-                   
+               
+            {/* <div class="inner" >  */}
          
             <h1 style ={{color:"darkGrey"}}> My Todos</h1>
             
                         
          {/*  <input type='text' name ='todo' onChange ={this.handleChange} value={this.state.text} placeholder ='add todo here'/>*/}
-         
+            <div className ="maintodo">
             <select id="dropdown" onChange={this.handleDropdownChange}>
               <option value="N/A">select todo</option>
               <option value="Buy milk and eggs">Buy milk and eggs</option>
@@ -137,9 +141,11 @@ class Todo extends Component {
               <option value="Do Laundry">Do Laundry</option>
               <option value="Get Mails">Get Mails</option>
             </select>
-          
+
+           
+          <DatePicker selected={this.state.todoDate} onChange={this.handleDateChange}></DatePicker>
      
-            <button style ={{background:"lightCyan"}} onClick={this.addTodo}>Add Todo</button>
+            <button style ={{background:"lightCyan"}} onClick={this.addTodo}>Add Todo</button> </div>
            <p> <span>{this.state.error}</span></p>
            <ul>
           
@@ -151,7 +157,7 @@ class Todo extends Component {
                 
                 )})}
                 </ul>
-                </div>
+                {/*</div>*/}
                 </>
             
          );
@@ -165,7 +171,8 @@ class Todo extends Component {
     
 
      const task = {title : this.state.text,
-                  completed : false}
+                  completed : false,
+                todoDate: this.state.todoDate}
      if((!isNaN(task.title)) && (task.title.length >0)){
         this.setState({error: 'input cannot be a number'});
      }
@@ -194,6 +201,12 @@ class Todo extends Component {
         if(!e.target.value){
             this.setState({error:''})
         }
+    }
+
+    handleDateChange = (date) =>{
+
+        this.setState({todoDate: date})
+
     }
 }
  

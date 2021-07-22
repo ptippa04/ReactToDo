@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 
 class TodoItem extends Component{
@@ -33,7 +34,7 @@ class TodoItem extends Component{
         return(
             <li className="item">
             <div className="todo-container" style={viewMode}>
-                <input type="checkbox" className="checkbox" checked={ this.props.checked} onChange={()=>this.props.checkboxUpdateProps(this.props.todo._id)}/>{this.props.todo.title} 
+                <input type="checkbox" className="checkbox" checked={ this.props.checked} onChange={()=>this.props.checkboxUpdateProps(this.props.todo._id)}/>{this.props.todo.title} {moment(this.props.todo.todoDate).format("LL")}
           
               
                

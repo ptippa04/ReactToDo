@@ -34,6 +34,12 @@
 .navBar ul{
   display:inline-flex;
   color:white;
+} 
+
+.maintodo{
+  display:inline-flex;
+  letter-spacing: 5px;
+  width: 100%;
 }
 
 @keyframes App-logo-spin {
@@ -50,7 +56,7 @@ input {
   border : none;
   margin-right: 0px;
   padding-bottom: 5px;
-  height:25px;
+  height:28px;
   width: 250px;
 
 }
@@ -60,8 +66,8 @@ select{
 
     border : none;
     margin-right: 25px;
-    height:35px;
-    width: 350px;
+    height:28px;
+    width: 300px;
   
   
 }
@@ -74,9 +80,10 @@ button {
   background:rgb(86, 140, 211);
   border-radius: 5px;
   font-size: medium;
+  margin-left: 25px;
   padding-left: 10px;
   padding-right: 10px;
-  padding-bottom: 20p;
+  
 }
 
 button:focus {
@@ -135,9 +142,9 @@ padding-bottom: 25px;
 .container{
   display: flex;
   flex-direction: column;
-  justify-content: left;
-  align-items: center;
-  max-width: 600px;
+  justify-content: center;
+  align-items: left;
+  max-width: 800px;
   margin: 0 auto;
 }
 
