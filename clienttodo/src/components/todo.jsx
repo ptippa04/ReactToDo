@@ -29,7 +29,7 @@ class Todo extends Component {
         axios.get(`http://localhost:4000/todos`)
         .then(res =>{
 
-           console.log("got todos from momgo",res.data);
+           console.log("got todos from mongo",res.data);
             const todoItems = res.data;
             this.setState({todoItems});
             this.setState({error:'',text:''})
@@ -49,6 +49,7 @@ class Todo extends Component {
                         .then(res =>{
                             if(res.data){
                                 console.log("got updated todos")
+                                console.log(res.data);
 
                                if(res.data.title === updatedTitle){
                                    console.log("same titles")
