@@ -1,18 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
 import Todo from './components/todo';
-import About from './components/About';
+import MyList from './components/MyList';
 import NotMatch from './components/NotMatch';
 import NavBar from './components/NavBar';
+import React, { Component } from 'react';
 
 import { Route, Switch } from "react-router-dom"
 
 
-function App() {
+class App extends Component{
 
-  function addTodo(){
+  
 
-  }
+  render(){
+  
   return (
    <div className="App">
       <NavBar />
@@ -24,8 +26,8 @@ function App() {
      <Todo></Todo>
      </div>
      </Route>
-     <Route path ="/about">
-       <About/>
+     <Route path ="/mylist">
+       <MyList/>
      </Route>
      <Route path ="*">
        <NotMatch/>
@@ -33,6 +35,7 @@ function App() {
      </Switch>
    </div>
   );
+}
 }
 
 export default App;

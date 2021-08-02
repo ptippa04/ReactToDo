@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import TodoItem from './TodoItem';
+
 
 import NavBar from './NavBar';
 import DatePicker from "react-datepicker";
@@ -14,110 +14,10 @@ class Todo extends Component {
         text:'',
         error:'',
         completed:false,
-        todoDate : new Date()
+        todoDate : new Date(),
+        value: "Add todo description here"
        
      }
-
-
-     componentDidMount(){
-         console.log("component mounted")
-         this.getTodos();
-     }
-
-     getTodos = () =>{
-
-        axios.get(`http://localhost:4000/todos`)
-        .then(res =>{
-
-           console.log("got todos from mongo",res.data);
-            const todoItems = res.data;
-            this.setState({todoItems});
-            this.setState({error:'',text:''})
-        }).catch( err =>{
-            console.log("could not get data");
-        });
-     }
-
-
-     setUpdate =(updatedTitle,id) =>{
-
-        let task ={title: updatedTitle,
-                    id:id}
-                    if(task.title && (task.title.length >0)){
-                        console.log("updating todos")
-                        axios.post(`http://localhost:4000/todos/${id}`,task)
-                        .then(res =>{
-                            if(res.data){
-                                console.log("got updated todos")
-                                console.log(res.data);
-
-                               if(res.data.title === updatedTitle){
-                                   console.log("same titles")
-                                this.setState({
-
-                                    todoItems: this.state.todoItems.map(todo => {
-                                        if (todo._id === id) {
-                                            console.log("setting title")
-                                          todo.title = updatedTitle
-                                        }
-                                        return todo
-                                      })
-                                   
-                                });
-                            }
-
-                                
-               
-                            }
-                        }).catch(err => console.log(err));
-                    }
-
-
-
-     }
-
-     deleteTodo = (id) => {
-        console.log("deleting todos")
-
-        axios.delete(`http://localhost:4000/todos/${id}`)
-        .then(res =>{
-            this.getTodos();
-        }).catch(err => console.log(err));
-
-    }
-
-    checkboxHandleChange =id =>{
-
-        
-
-        this.setState({
-            todoItems:this.state.todoItems.map(todo=>{
-                console.log("clciked todo checkbox")
-
-                if(todo._id === id){
-                    console.log("updated state of todo checkbox")
-                    todo.completed = !todo.completed;
-
-                    let task= {
-                        title:todo.title,
-                        completed:todo.completed,
-                        id:id
-                    }
-                    axios.post(`http://localhost:4000/todos/${id}`,task)
-                    .then(res =>{
-                        if(res.data){
-                            console.log("checkbox state updated in db");
-                        }
-                    })
-                    .catch(err => console.log(err));
-
-
-                }
-                return todo;
-            })
-        });
-    }
-
 
      
     render() { 
@@ -133,6 +33,7 @@ class Todo extends Component {
                         
          {/*  <input type='text' name ='todo' onChange ={this.handleChange} value={this.state.text} placeholder ='add todo here'/>*/}
             <div className ="maintodo">
+                <label> Todo Name
             <select id="dropdown" onChange={this.handleDropdownChange}>
               <option value="N/A">select todo</option>
               <option value="Buy milk and eggs">Buy milk and eggs</option>
@@ -142,22 +43,29 @@ class Todo extends Component {
               <option value="Do Laundry">Do Laundry</option>
               <option value="Get Mails">Get Mails</option>
             </select>
+            </label>
+            </div>
 
+            <div onChange={this.onChangeValue}>
+                <label> Todo type
+        <input type="radio" value="Male" name="gender" /> Male
+        <input type="radio" value="Female" name="gender" /> Female
+       
+        </label>
+      </div>
            
-          <DatePicker selected={this.state.todoDate} onChange={this.handleDateChange}></DatePicker>
-     
-            <button style ={{background:"lightCyan"}} onClick={this.addTodo}>Add Todo</button> </div>
-           <p> <span>{this.state.error}</span></p>
-           <ul>
-          
-               {this.state.todoItems.map(todo =>{ return(
+         <label>Start date  <DatePicker selected={this.state.todoDate} onChange={this.handleDateChange}></DatePicker></label>
+         <label>End date  <DatePicker selected={this.state.todoDate} onChange={this.handleDateChange}></DatePicker></label>
+         <label>
+          Description:
+          <textarea value={this.state.value} onChange={this.handleTextAresChange} />
+        </label>
 
-                    <TodoItem key={todo._id} todo={todo}  checked={todo.completed} checkboxUpdateProps={this.checkboxHandleChange} setUpdate={this.setUpdate} deleteTodoProps={this.deleteTodo}/>
-                  
-                   
-                
-                )})}
-                </ul>
+
+     
+            <button style ={{background:"lightCyan"}} onClick={this.addTodo}>Add Todo</button> 
+           <p> <span>{this.state.error}</span></p>
+          
                 {/*</div>*/}
                 </>
             
@@ -209,6 +117,14 @@ class Todo extends Component {
         this.setState({todoDate: date})
 
     }
+
+    handleTextAresChange =(e) =>{
+
+    }
+
+    onChangeValue(event) {
+        console.log(event.target.value);
+      }
 }
  
 export default Todo ;

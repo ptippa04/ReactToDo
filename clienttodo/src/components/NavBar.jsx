@@ -11,8 +11,8 @@ const links =[{
 },
 {
     id:2,
-    path:"/about",
-    text: "About"
+    path:"/mylist",
+    text: "My List"
 }]
 
     return( <nav className="navBar">

@@ -37,8 +37,8 @@
 } 
 
 .maintodo{
-  display:inline-flex;
-  letter-spacing: 5px;
+  display:flow-root;
+  letter-spacing: 0px;
   width: 100%;
 }
 
@@ -54,20 +54,32 @@
 input {
 
   border : none;
-  margin-right: 0px;
+  margin-left: 25px;
   padding-bottom: 5px;
-  height:28px;
-  width: 250px;
+  margin-left: 55px;
+  margin-top:10px;
+  margin-bottom: 10px;
+  height: 25px;
+  
 
+}
+
+label{
+
+  color: White;
+  margin-right: 20px;
+  text-align:start;
 }
 
 select{
  
 
     border : none;
-    margin-right: 25px;
+    margin-left: 25px;
+    margin-top:10px;
+    margin-bottom: 10px;
     height:28px;
-    width: 300px;
+    width: 200px;
   
   
 }
@@ -78,11 +90,14 @@ select{
 
 button {
   background:rgb(86, 140, 211);
-  border-radius: 5px;
+  border-radius: 0px;
   font-size: medium;
-  margin-left: 25px;
-  padding-left: 10px;
-  padding-right: 10px;
+  margin-top: 20px;
+  margin-left: 120px;
+  padding-left: 0px;
+  padding-right: 0px;
+  height: 35px;
+  width: 95px;
   
 }
 
@@ -140,7 +155,7 @@ padding-bottom: 25px;
 }
 
 .container{
-  display: flex;
+  display: grid;
   flex-direction: column;
   justify-content: center;
   align-items: left;
@@ -157,5 +172,13 @@ padding-bottom: 25px;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+textarea {
+
+  margin-left:40px;
+  margin-top:10px;
+  margin-bottom: 0px;
+  height: 45px;
+  width:200px;
 }
 
