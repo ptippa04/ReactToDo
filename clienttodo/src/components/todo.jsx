@@ -10,12 +10,14 @@ import "react-datepicker/dist/react-datepicker.css";
 
 class Todo extends Component {
     state = { 
-        todoItems:[],
-        text:'',
+       
         error:'',
+        title: "select todo",
         completed:false,
-        todoDate : new Date(),
-        value: "Add todo description here"
+        startTodoDate : new Date(),
+        endTodoDate : new Date(),
+        textareaValue: " ",
+        selectedOption : "personal"
        
      }
 
@@ -34,31 +36,34 @@ class Todo extends Component {
          {/*  <input type='text' name ='todo' onChange ={this.handleChange} value={this.state.text} placeholder ='add todo here'/>*/}
             <div className ="maintodo">
                 <label> Todo Name
-            <select id="dropdown" onChange={this.handleDropdownChange}>
-              <option value="N/A">select todo</option>
+            <select value={this.state.title} id="dropdown"  onChange={this.handleDropdownChange}>
+            <option value="N/A">Select todo</option>
               <option value="Buy milk and eggs">Buy milk and eggs</option>
               <option value="Finish pending tasks">Finish pending tasks</option>
-              <option value="update resume">update resume</option>
-              <option value="finish tutorial">finish tutorial</option>
+              <option value="update resume">Update resume</option>
+              <option value="finish tutorial">Finish tutorial</option>
               <option value="Do Laundry">Do Laundry</option>
               <option value="Get Mails">Get Mails</option>
+              <option value="Test Website">Test website</option>
+              <option value="pay bills">Pay Bills</option>
+              <option value="Finish todo user story">Finish todo user story</option>
             </select>
             </label>
             </div>
 
             <div onChange={this.onChangeValue}>
                 <label> Todo type
-        <input type="radio" value="Male" name="gender" /> Male
-        <input type="radio" value="Female" name="gender" /> Female
+        <input type="radio" value="work" checked={this.state.selectedOption === "work"} onChange={this.handleOptionChange} name="WorkType" /> Work
+        <input type="radio" value="personal" checked={this.state.selectedOption === "personal"} onChange={this.handleOptionChange}  name="WorkType" /> Personal
        
         </label>
       </div>
            
-         <label>Start date  <DatePicker selected={this.state.todoDate} onChange={this.handleDateChange}></DatePicker></label>
-         <label>End date  <DatePicker selected={this.state.todoDate} onChange={this.handleDateChange}></DatePicker></label>
+         <label>Start date  <DatePicker selected={this.state.startTodoDate} onChange={this.handleStartDateChange}></DatePicker></label>
+         <label>End date  <DatePicker selected={this.state.endTodoDate} onChange={this.handleEndDateChange}></DatePicker></label>
          <label>
           Description:
-          <textarea value={this.state.value} onChange={this.handleTextAresChange} />
+          <textarea value={this.state.textareaValue} onChange={this.handleTextAreaChange} />
         </label>
 
 
@@ -73,15 +78,22 @@ class Todo extends Component {
     }
 
 
-   
-   
+    
 
     addTodo = () =>{
     
 
-     const task = {title : this.state.text,
+     const task = {title : this.state.title,
                   completed : false,
-                todoDate: this.state.todoDate}
+                  startTodoDate: this.state.startTodoDate,
+                  endTodoDate :this.state.endTodoDate,
+                  description: this.state.textareaValue,
+                  todoType: this.state.selectedOption
+
+
+                }
+
+                console.log(task);
      if((!isNaN(task.title)) && (task.title.length >0)){
         this.setState({error: 'input cannot be a number'});
      }
@@ -90,9 +102,21 @@ class Todo extends Component {
          axios.post(`http://localhost:4000/todos`,task)
          .then(res =>{
              if(res.data){
-                 console.log("got todos",res.data)
-                 this.getTodos();
-                 
+                 console.log("got todos",res.data);
+                 alert("Todo added!!")
+                 this.setState({
+                     text:'',
+                     title:"select todo",
+                    completed:false,
+                    startTodoDate : new Date(),
+                    endTodoDate : new Date(),
+                    textareaValue: " ",
+                    selectedOption : "personal",
+
+                    
+
+                 })
+              
 
              }
          }).catch(err => console.log(err));
@@ -106,24 +130,41 @@ class Todo extends Component {
     handleDropdownChange = (e) =>{
 
 
-        this.setState({text:e.target.value})
+        this.setState({title:e.target.value})
+        console.log(e.target.name);
         if(!e.target.value){
             this.setState({error:''})
         }
     }
 
-    handleDateChange = (date) =>{
+    handleStartDateChange = (date) =>{
 
-        this.setState({todoDate: date})
+        this.setState({startTodoDate: date})
 
     }
 
-    handleTextAresChange =(e) =>{
+    handleEndDateChange = (date) =>{
 
+        this.setState({endTodoDate: date})
+        console.log(date);
+
+    }
+
+    handleTextAreaChange =(e) =>{
+
+        this.setState({textareaValue:e.target.value})
+
+    }
+
+    handleOptionChange =(e) =>{
+        this.setState({
+            selectedOption: e.target.value
+        })
     }
 
     onChangeValue(event) {
         console.log(event.target.value);
+        console.log(event.target.name);
       }
 }
  

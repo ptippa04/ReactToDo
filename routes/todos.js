@@ -16,7 +16,7 @@ router.get('/',(req,res,next) => {
 
     //Mysql
 
-    let sql = 'SELECT * FROM todos';
+    let sql ='SELECT t._id,t.title,t.completed,t.todoType,td.todoDescription,td.todoStartDate,td.todoEndDate FROM todos_desc td JOIN todos t ON (td._id = t._id)';
     connection.query(sql, (error, results, fields) => {
         if (error) {
           return console.error(error.message);
@@ -49,9 +49,22 @@ router.post('/',(req,res,next) => {
 
     if(req.body.title){
 
-    let stmt = 'INSERT INTO todos(title,completed,todoDate) VALUES(?,?,?)';
-    let todo = [''+req.body.title,false,''+req.body.todoDate];
+        console.log(req.body);
+
+    let stmt = 'INSERT INTO todos(title,completed,todoType) VALUES(?,?,?)';
+    let todo = [''+req.body.title,false,''+req.body.todoType];
     connection.query(stmt, todo, (err, results, fields) => {
+        if (err) {
+          return console.error(err.message);
+        }
+        // get inserted id
+        console.log('Todo Id:' + results.insertId);
+
+       
+      });
+      let stmt2 = 'INSERT INTO todos_desc(todoDescription,todoStartDate,todoEndDate) VALUES(?,?,?)';
+      let todo2 = [''+req.body.description,''+req.body.startTodoDate,''+req.body.endTodoDate];
+    connection.query(stmt2, todo2, (err, results, fields) => {
         if (err) {
           return console.error(err.message);
         }
@@ -62,6 +75,8 @@ router.post('/',(req,res,next) => {
             data:results
         })
       });
+
+
     } else {
         res.json({
                     error : "input is empty"

@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import TodoItem from './TodoItem';
+import moment from 'moment';
 
 class MyList extends Component{
 
     state = { 
         todoItems:[],
         completed:false,
+        sort:{
+            column:null,
+            direction: 'desc'
+        }
       
      }
 
@@ -109,21 +114,130 @@ class MyList extends Component{
         });
     }
 
+    onSort = (column) => (e) => {
+        const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+        const sortedData = this.state.todoItems.sort((a, b) => {
+          if (column === 'title' ) {
+            const tA = a.title.toUpperCase(); 
+            const tB = b.title.toUpperCase(); 
+            if (tA < tB) {
+              return -1;
+            }
+            if (tA > tB) {
+              return 1;
+            }
+    
+            // names must be equal
+            return 0;
+          }
+        else if(column === 'todoStartDate' ){
+             const dA = new Date(a.todoStartDate);
+             const dB = new Date(b.todoStartDate);
+             console.log("dates"+dA+" and "+dB);
+             if(dA < dB)
+             return 1;
+             else if(dA > dB)
+             return -1;
+             else
+             return 0;
+
+        } else if(column === 'todoType') {
+            const tA = a.todoType.toUpperCase(); 
+            const tB = b.todoType.toUpperCase(); 
+            if (tA < tB) {
+              return -1;
+            }
+            if (tA > tB) {
+              return 1;
+            }
+    
+            
+            return 0;
+
+
+        } else if(column === 'todoEndDate' ){
+            const dA = new Date(a.todoEndDate);
+            const dB = new Date(b.todoEndDate);
+            console.log("dates"+dA+" and "+dB);
+            if(dA < dB)
+            return 1;
+            else if(dA > dB)
+            return -1;
+            else
+            return 0;
+
+       }
+        });
+          
+        if (direction === 'desc') {
+          sortedData.reverse();
+        }
+        
+        this.setState({
+          data: sortedData,
+          sort: {
+            column,
+            direction,
+          }
+        });
+      };
+
+      setArrow = (column) => {
+        let className = 'sort-direction';
+        
+        if (this.state.sort.column === column) {
+          className += this.state.sort.direction === 'asc' ? ' asc' : ' desc';
+        }
+        
+        console.log(className);
+        
+        return className;
+      };
+
 
     render(){
 
         return (
             <div>
-                 <ul>
+                <table>
+                    <thead>
+                        <tr>
+                        <th onClick={this.onSort('title')}>Todo Name
+                        {/*<span className={this.setArrow('title')}></span>*/}</th>
+                        <th onClick={this.onSort('todoType')}>Todo Type</th>
+                        <th>Description</th>
+                        <th onClick={this.onSort('todoStartDate')}>Start Date</th>
+                        <th onClick={this.onSort('todoEndDate')}>End Date</th>
+                        <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {  this.state.todoItems.map(todo => { return(
+                          <tr key ={todo._id}>
+                              <td>{todo.title}</td>
+                              <td>{todo.todoType}</td>
+                              <td>{todo.todoDescription}</td>
+                              <td>{moment(todo.todoStartDate).format("LL")}</td>
+                              <td>{moment(todo.todoEndDate).format("LL")}</td>
+                        
+                              <td>{(todo.completed)? "done": "pending"}</td>
+                          </tr>
+                      )
+                      })}
+                    </tbody>
+
+
+                </table>
+                
           
-          {this.state.todoItems.map(todo =>{ return(
+        {/*  {this.state.todoItems.map(todo =>{ return(
 
                <TodoItem key={todo._id} todo={todo}  checked={todo.completed} checkboxUpdateProps={this.checkboxHandleChange} setUpdate={this.setUpdate} deleteTodoProps={this.deleteTodo}/>
              
               
            
-           )})}
-           </ul>
+        )})}*/}
+        
             </div>
         )
     }

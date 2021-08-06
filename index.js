@@ -40,7 +40,15 @@ connection.connect(function(err){
         _id int primary key auto_increment,
         title varchar(255)not null,
         completed tinyint(1) not null default 0,
-        todoDate DATETIME(6)
+        todoType varchar(255)not null
+    )`;
+
+    let createDescriptionTodos = `create table if not exists todos_desc(
+        _id int primary key auto_increment,
+        todoDescription varchar(255)not null,   
+        todoStartDate DATETIME(6),
+        todoEndDate DATETIME(6)
+
     )`;
 
     connection.query(createTodos, function(err, results, fields){
@@ -52,6 +60,15 @@ connection.connect(function(err){
         console.log("todo table got created");
     });
 
+
+    connection.query(createDescriptionTodos, function(err, results, fields){
+
+        if(err){
+            console.lof(err.message);
+        }
+
+        console.log("todo desc table got created");
+    });
     connection.end(function(err){
         if(err){
             return console.log(err.message);

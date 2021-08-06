@@ -142,7 +142,26 @@ padding-bottom: 25px;
 
 
 }
+th{
+  color:orange;
+  font-size:x-large;
+  align-items:flex-start;
+  margin-left: 20px;
+  padding-right: 20px;
+    padding-left: 20px;
+}
+td{
 
+  color: white;
+  font-size:medium;
+  padding : 8px;
+}
+
+table {
+  align-items: center;
+  border: mintcream;
+  
+}
 .todo-container div{
 
   display:inline-block;
@@ -181,4 +200,21 @@ textarea {
   height: 45px;
   width:200px;
 }
+
+.sort-direction {
+  display: inline-block;
+  height: 0;
+  width: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+  
+  .asc {
+    border-bottom: 5px solid white;
+  }
+  
+  .desc {
+    border-top: 5px solid white;
+  }
+
 

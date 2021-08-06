@@ -38,10 +38,10 @@ class TodoItem extends Component{
           
               
                
-               <button style ={{background:"lightBlue"},{viewMode}} onClick = { () => this.editTodo(this.props.todo._id) }>Edit</button>
+            {/*   <button style ={{background:"lightBlue"},{viewMode}} onClick = { () => this.editTodo(this.props.todo._id) }>Edit</button>
                
                
-               <button style ={{background:"green"}} onClick = { () => this.props.deleteTodoProps(this.props.todo._id) }>Delete</button>
+        <button style ={{background:"green"}} onClick = { () => this.props.deleteTodoProps(this.props.todo._id) }>Delete</button>*/}
            </div> 
            <input type ="text" style={editMode} defaultValue ={this.props.todo.title}  onChange={e => {this.props.setUpdate(e.target.value,this.props.todo._id)
            }}   onKeyDown={this.handleUpdatedDone }></input>
