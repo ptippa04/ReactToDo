@@ -97,8 +97,10 @@ router.delete('/:id',(req,res,next) =>{
 
     //Mysql
 
-    let sql = `DELETE FROM todos WHERE _id =?`;
-    let id = req.params.id;
+   // let sql = `DELETE FROM todos WHERE _id =?`;
+   let id = req.params.id;
+   let sql = 'DELETE td, t FROM todos_desc td JOIN todos t ON (td._id = t._id) WHERE t._id =?';
+   
     console.log("id is "+id);
     connection.query(sql, [id],(error,results,fields) =>{
         if(error){
@@ -132,8 +134,8 @@ router.post('/:id',(req,res,next) =>{
    // let date = req.body.todoDate;
     let id = req.params.id;
 
-    let sql = 'UPDATE todos SET title=?,completed=? WHERE _id=?';
-    connection.query(sql, [title,completed,id],(error,results,fields) =>{
+    let sql = 'UPDATE todos SET completed=? WHERE _id=?';
+    connection.query(sql, [completed,id],(error,results,fields) =>{
         if(error){
             return console.error(error.message);
         }

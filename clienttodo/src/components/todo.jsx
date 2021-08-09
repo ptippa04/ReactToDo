@@ -67,9 +67,11 @@ class Todo extends Component {
         </label>
 
 
-     
+           <div className = "todobutton">
             <button style ={{background:"lightCyan"}} onClick={this.addTodo}>Add Todo</button> 
+            <button style ={{background:"lightCyan"}} onClick={this.cancelTodo}>Cancel</button>
            <p> <span>{this.state.error}</span></p>
+           </div>
           
                 {/*</div>*/}
                 </>
@@ -78,7 +80,18 @@ class Todo extends Component {
     }
 
 
-    
+    cancelTodo = () =>{
+
+        this.setState({ error:'',
+        title: "select todo",
+        completed:false,
+        startTodoDate : new Date(),
+        endTodoDate : new Date(),
+        textareaValue: " ",
+        selectedOption : "personal"})
+
+        console.log("todo cancelled");
+    }
 
     addTodo = () =>{
     

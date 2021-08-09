@@ -103,6 +103,8 @@ class MyList extends Component{
                     .then(res =>{
                         if(res.data){
                             console.log("checkbox state updated in db");
+                           // this.setState({completed:true})
+
                         }
                     })
                     .catch(err => console.log(err));
@@ -202,18 +204,21 @@ class MyList extends Component{
                 <table>
                     <thead>
                         <tr>
-                        <th onClick={this.onSort('title')}>Todo Name
+                          <th></th>
+                        <th onClick={this.onSort('title')}> Todo Name
                         {/*<span className={this.setArrow('title')}></span>*/}</th>
                         <th onClick={this.onSort('todoType')}>Todo Type</th>
                         <th>Description</th>
                         <th onClick={this.onSort('todoStartDate')}>Start Date</th>
                         <th onClick={this.onSort('todoEndDate')}>End Date</th>
                         <th>Status</th>
+                        <th></th>
                         </tr>
                     </thead>
                     <tbody>
                       {  this.state.todoItems.map(todo => { return(
                           <tr key ={todo._id}>
+                            <td><input type="checkbox" className="checkbox" checked={ todo.completed} onChange={()=>this.checkboxHandleChange(todo._id)}/></td>
                               <td>{todo.title}</td>
                               <td>{todo.todoType}</td>
                               <td>{todo.todoDescription}</td>
@@ -221,6 +226,7 @@ class MyList extends Component{
                               <td>{moment(todo.todoEndDate).format("LL")}</td>
                         
                               <td>{(todo.completed)? "done": "pending"}</td>
+                              <td> <button style ={{background:"green"}} onClick = { () => this.deleteTodo(todo._id) }>Delete</button></td>
                           </tr>
                       )
                       })}
