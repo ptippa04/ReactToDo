@@ -103,7 +103,8 @@ class MyList extends Component{
                     .then(res =>{
                         if(res.data){
                             console.log("checkbox state updated in db");
-                           // this.setState({completed:true})
+                           // todo.completed = res.data.completed;
+
 
                         }
                     })

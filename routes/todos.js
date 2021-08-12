@@ -141,7 +141,8 @@ router.post('/:id',(req,res,next) =>{
         }
         console.log('Rows affected:', results.affectedRows);
         let data = {
-            title: req.body.title
+            title: req.body.title,
+            completed : req.body.completed
         }
        res.send(data);
         

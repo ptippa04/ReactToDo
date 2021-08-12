@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Modal from './Modal';
 
 
 
 import NavBar from './NavBar';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
 
 
 class Todo extends Component {
@@ -17,8 +19,13 @@ class Todo extends Component {
         startTodoDate : new Date(),
         endTodoDate : new Date(),
         textareaValue: " ",
-        selectedOption : "personal"
+        selectedOption : "personal",
+        show : false
        
+     }
+
+     showModal = () =>{
+         this.setState({show:!this.state.show});
      }
 
      
@@ -68,16 +75,24 @@ class Todo extends Component {
 
 
            <div className = "todobutton">
-            <button style ={{background:"lightCyan"}} onClick={this.addTodo}>Add Todo</button> 
+            <button style ={{background:"lightCyan"}} onClick={ this.addTodo}>Add Todo</button> 
             <button style ={{background:"lightCyan"}} onClick={this.cancelTodo}>Cancel</button>
            <p> <span>{this.state.error}</span></p>
            </div>
           
                 {/*</div>*/}
+                <Modal onClose={this.showModal} show={this.state.show}/>
                 </>
             
          );
     }
+
+    showModal = e => {
+        console.log("close called in home");
+        this.setState({
+          show: !this.state.show
+        });
+      };
 
 
     cancelTodo = () =>{
@@ -116,7 +131,9 @@ class Todo extends Component {
          .then(res =>{
              if(res.data){
                  console.log("got todos",res.data);
-                 alert("Todo added!!")
+               //  alert("Todo added!!")
+               this.setState({ show:!this.state.show})
+               
                  this.setState({
                      text:'',
                      title:"select todo",
@@ -125,6 +142,7 @@ class Todo extends Component {
                     endTodoDate : new Date(),
                     textareaValue: " ",
                     selectedOption : "personal",
+                   
 
                     
 
@@ -134,7 +152,7 @@ class Todo extends Component {
              }
          }).catch(err => console.log(err));
      } else{
-        this.setState({error: 'input is required'});
+        this.setState({error: 'invalid input'});
      }
 
     }
