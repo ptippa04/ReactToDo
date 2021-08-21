@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Modal from './Modal';
 
-
+import moment from 'moment';
 
 import NavBar from './NavBar';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
+import DatePickerComponent from './DatePickerComponent';
+
 
 
 
@@ -29,7 +32,10 @@ class Todo extends Component {
      }
 
      
+
+     
     render() { 
+     
        
         return ( 
             <>
@@ -66,8 +72,12 @@ class Todo extends Component {
         </label>
       </div>
            
-         <label>Start date  <DatePicker selected={this.state.startTodoDate} onChange={this.handleStartDateChange}></DatePicker></label>
-         <label>End date  <DatePicker selected={this.state.endTodoDate} onChange={this.handleEndDateChange}></DatePicker></label>
+        <label>Start date  <DatePicker selected={this.state.startTodoDate}  startDate={this.state.startTodoDate} customInput={<DatePickerComponent />}
+          placeholderText="select Date" onChange={this.handleStartDateChange} ></DatePicker></label>
+         <label>End  date  <DatePicker selected={this.state.endTodoDate} startDate={this.state.startTodoDate} customInput={<DatePickerComponent />}
+         endDate={this.state.endTodoDate} minDate={new Date()} onChange={this.handleEndDateChange} ></DatePicker></label>
+         
+         
          <label>
           Description:
           <textarea value={this.state.textareaValue} onChange={this.handleTextAreaChange} />
@@ -113,7 +123,7 @@ class Todo extends Component {
 
      const task = {title : this.state.title,
                   completed : false,
-                  startTodoDate: this.state.startTodoDate,
+                  startTodoDate:this.state.startTodoDate ,
                   endTodoDate :this.state.endTodoDate,
                   description: this.state.textareaValue,
                   todoType: this.state.selectedOption
@@ -144,7 +154,7 @@ class Todo extends Component {
                     selectedOption : "personal",
                    
 
-                    
+                
 
                  })
               
@@ -169,6 +179,7 @@ class Todo extends Component {
     }
 
     handleStartDateChange = (date) =>{
+      console.log("date is"+date);
 
         this.setState({startTodoDate: date})
 
@@ -193,6 +204,12 @@ class Todo extends Component {
         })
     }
 
+    handleChange=(e =>{
+      let value = e.target.value;
+      let name = e.target.name;
+      this.setState({name:value})
+    })
+
     onChangeValue(event) {
         console.log(event.target.value);
         console.log(event.target.name);
@@ -200,3 +217,5 @@ class Todo extends Component {
 }
  
 export default Todo ;
+
+
