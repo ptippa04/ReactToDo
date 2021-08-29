@@ -150,6 +150,45 @@ router.post('/:id',(req,res,next) =>{
     });
 
 
+})
+
+
+
+router.put('/:id',(req,res,next) =>{
+   
+    //mysql
+    let title = req.body.title;
+    let completed = req.body.completed;
+    let todoType = req.body.todoType;
+    let todoDescription = req.body.description;
+    let todoStartDate = req.body.startTodoDate;
+    let todoEndDate = req.body.endTodoDate;
+    let id = req.params.id;
+
+    let sql = 'UPDATE todos SET completed=?,todoType=? WHERE _id=?';
+    connection.query(sql, [completed,todoType,id],(error,results,fields) =>{
+        if(error){
+            return console.error(error.message);
+        }
+        console.log('Rows affected:', results.affectedRows);
+
+        let sql1 = 'UPDATE todos_desc SET todoDescription=?,todoStartDate=?,todoEndDate=? WHERE _id=?';
+
+        connection.query(sql1, [todoDescription,todoStartDate,todoEndDate,id],(error,results,fields) =>{
+            if(error){
+                return console.error(error.message);
+            }
+            console.log('Rows affected:', results.affectedRows);
+
+
+        let data = {
+            title: req.body.title
+               }
+       res.send(data);
+    });
+        
+            
+    });
 
 
 })

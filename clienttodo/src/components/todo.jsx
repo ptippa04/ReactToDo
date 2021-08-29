@@ -91,7 +91,7 @@ class Todo extends Component {
            </div>
           
                 {/*</div>*/}
-                <Modal onClose={this.showModal} show={this.state.show}/>
+                <Modal onClose={this.showModal} show={this.state.show}> Todo Added!! </Modal>
                 </>
             
          );
@@ -132,10 +132,15 @@ class Todo extends Component {
                 }
 
                 console.log(task);
+                console.log("task title"+task.title);
+                console.log("task description", task.description);
+
      if((!isNaN(task.title)) && (task.title.length >0)){
         this.setState({error: 'input cannot be a number'});
+     } else if(task.description == " "){
+      this.setState({error: 'input required'});
      }
-     else if(task.title && (task.title.length >0)){
+     else if((task.title != "select todo") && (task.title.length >0) && (task.description.length > 0)){
          console.log("adding todos")
          axios.post(`http://localhost:4000/todos`,task)
          .then(res =>{
@@ -154,7 +159,7 @@ class Todo extends Component {
                     selectedOption : "personal",
                    
 
-                
+              
 
                  })
               

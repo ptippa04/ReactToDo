@@ -3,12 +3,15 @@ import axios from 'axios';
 import TodoItem from './TodoItem';
 import moment from 'moment';
 import EditModal from './EditModal';
+import format from "date-fns/format";
+import Modal from './Modal';
 
 class MyList extends Component{
 
     state = { 
         todoItems:[],
         completed:false,
+        show : false,
         sort:{
             column:null,
             direction: 'desc'
@@ -31,6 +34,10 @@ class MyList extends Component{
          this.getTodos();
      }
 
+     showModal = () =>{
+      this.setState({show:!this.state.show});
+  }
+
     getTodos = () =>{
 
         axios.get(`http://localhost:4000/todos`)
@@ -45,12 +52,19 @@ class MyList extends Component{
         });
      }
 
-     showModal = e => {
+     showeditModal = e => {
       console.log("close called in home");
       this.setState({
         editshow: !this.state.editshow,
-
+         show:!this.state.show
        
+      });
+    };
+
+    showModal = e => {
+      console.log("close called in home");
+      this.setState({
+        show: !this.state.show
       });
     };
 
@@ -117,7 +131,44 @@ class MyList extends Component{
 
       }
 
-      saveTodo = (id) =>{
+      saveTodo = (id,todo) =>{
+
+        console.log("satrtdate"+this.state.editList.startTodoDate);
+        console.log("enddate"+this.state.editList.endTodoDate);
+        console.log("type",this.state.editList.selectedOption);
+        console.log("textarea",this.state.editList.textareaValue);
+
+
+        let startTodoDate = (this.state.editList.startTodoDate)? todo.startTodoDate : this.state.editList.startTodoDate;
+        let endTodoDate = (this.state.editList.endTodoDate)? todo.endTodoDate : this.state.editList.endTodoDate;
+        let todoType =  (this.state.editList.selectedOption == "")? todo.todoType : this.state.editList.selectedOption;
+
+        let description = (this.state.editList.textareaValue == "")? todo.description : this.state.editList.textareaValue;
+
+        const task = {title : this.state.title,
+          completed : false,
+          startTodoDate:startTodoDate ,
+          endTodoDate :endTodoDate,
+          description: description,
+          todoType: todoType,
+          id: id
+
+
+
+        }
+        axios.put(`http://localhost:4000/todos/${id}`,task)
+                            .then(res =>{
+                                if(res.data){
+                                    console.log("gotedit  updated todos")
+                                    console.log(res.data);
+
+                                   this.getTodos();
+    
+                                    
+                   
+                                }
+                            }).catch(err => console.log(err));
+
 
       }
 
@@ -246,6 +297,50 @@ class MyList extends Component{
         return className;
       };
 
+      handleStartDateChange = (date) =>{
+        console.log("date is"+date);
+  
+          this.setState({
+            editList:{
+              ...this.state.editList,startTodoDate: date}
+            });
+  
+      }
+  
+      handleEndDateChange = (date) =>{
+  
+        this.setState({
+          editList:{
+            ...this.state.editList,endTodoDate: date}
+          });
+  
+      }
+  
+      handleTextAreaChange =(e) =>{
+  
+        //  this.setState({textareaValue:e.target.value})
+
+        this.setState({
+          editList:{
+            ...this.state.editList,textareaValue:e.target.value}
+          });
+  
+      }
+  
+      handleOptionChange =(e) =>{
+        console.log("handle option chnage called");
+          // this.setState({
+          //     selectedOption: e.target.value
+          // })
+
+          this.setState({
+            editList:{
+              ...this.state.editList,selectedOption: e.target.value}
+            });
+
+        
+      }
+
 
     render(){
 
@@ -279,7 +374,7 @@ class MyList extends Component{
                               <td>{(todo.completed)? "done": "pending"}</td>
                               <td> <button style ={{background:"green"}} onClick = { () => this.deleteTodo(todo._id) }>Delete</button></td>
                              <td> <button style ={{background:"lightBlue"}} onClick = { () => this.editTodo(todo._id,todo) }>Edit
-                             </button> <EditModal onClose={this.showModal} myProp= {this.state.editList} 
+                             </button> <EditModal onClose={this.showeditModal} myProp= {this.state.editList} 
                              handleOptionChange = {this.handleOptionChange}
                              handleStartDateChange = {this.handleStartDateChange}
                              handleEndDateChange = {this.handleEndDateChange}
@@ -297,19 +392,15 @@ class MyList extends Component{
 
                 </table>
                 
-               
-        {/*  {this.state.todoItems.map(todo =>{ return(
-
-               <TodoItem key={todo._id} todo={todo}  checked={todo.completed} checkboxUpdateProps={this.checkboxHandleChange} setUpdate={this.setUpdate} deleteTodoProps={this.deleteTodo}/>
-             
-              
-           
-        )})}*/}
+                <Modal onClose={this.showModal} show={this.state.show}> Todo Saved!! </Modal>
+      
         
             </div>
         )
     }
 
 }
+
+
 
 export default MyList

@@ -38,17 +38,17 @@ class EditModal extends React.Component{
         return(
             <div className ="editmodal" id="editmodal">
               
-                <h1> EDIT TODO</h1>
+                <h1 style={{color:"lightBlue"}}> EDIT TODO</h1>
                 <div className ="maintodo">
                 <label> Todo Name
-                     <input type="text" value={this.props.myProp.title} id="dropdown" readOnly >
+                     <input type="text" value={this.props.myProp.title} id="dropdown" >
                          
              
                      </input>
                  </label>
                 </div>
                
-                <div onChange={this.onChangeValue}>
+                <div className="todoType" >
                 <label> Todo type
                     <input type="radio" value="work" checked={this.props.myProp.selectedOption === "work"} onChange={this.props.handleOptionChange} name="WorkType" /> Work
                      <input type="radio" value="personal" checked={this.props.myProp.selectedOption === "personal"} onChange={this.props.handleOptionChange}  name="WorkType" /> Personal
@@ -63,7 +63,7 @@ class EditModal extends React.Component{
                  <label>End  date  <DatePicker selected={moment(this.props.myProp.endTodoDate).toDate()} startDate={this.props.myProp.startTodoDate} customInput={<DatePickerComponent />}
                 endDate={this.props.myProp.endTodoDate} minDate={new Date()} onChange={this.props.handleEndDateChange} ></DatePicker></label>
                     </div>
-               <div>
+               <div className= "textarea">
                  <label>
                   Description:
                  <textarea value={this.props.myProp.textareaValue} onChange={this.props.handleTextAreaChange} />
@@ -72,7 +72,7 @@ class EditModal extends React.Component{
                     </div>
              <div className = "todobutton">
              <button style ={{background:"lightCyan"}} onClick={e =>{
-                this.props.saveTodo(this.props.myProp.id)
+                this.props.saveTodo(this.props.myProp.id,this.props.myProp)
                     this.onClose(e);
 
                 }} >Save </button> 

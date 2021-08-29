@@ -10,10 +10,12 @@ const DatePickerComponent = React.forwardRef((props,ref) => {
       //    {props.value || props.placeholder}
       //  </button>
 <>
-      <label style={{backgroundColor:"White",color:"black",marginLeft:"50px"}} onClick={props.onClick} ref={ref}>
+      <label style={{backgroundColor:"White",color:"black",marginLeft:"50px", paddingInlineEnd: "5px",paddingInlineStart:"5px"}} onClick={props.onClick} ref={ref}>
       {props.value || props.placeholder}
+
+      <FontAwesomeIcon icon={faCalendarAlt} onClick={props.onClick} />
     </label>
-    <FontAwesomeIcon icon={faCalendarAlt} onClick={props.onClick} />
+    
     </>
     )
 

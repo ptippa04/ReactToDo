@@ -15,7 +15,9 @@ class Modal extends React.Component{
         return(
             <div className ="modal" id="modal">
               
-                <h2>Todo added!</h2>
+            {/*  <h2>Todo added!</h2>*/}
+
+            <div>{this.props.children}</div>
                
                
                 <button onClick={e =>{
